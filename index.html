@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<meta charset="utf-8" />	
+	<title>indoorMaps & Analytics - Visitor tracking and indoors GPS</title>
+		
+	<meta name="robots" content="">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+	<!-- CSS Files -->
+	<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+	<link rel="stylesheet" type="text/css" href="css/foundation.css"/>
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+	<link rel="stylesheet" type="text/css" href="css/ico.css"/>
+	<link rel="stylesheet" type="text/css" href="css/flexslider.css"/>
+
+	<!-- Google Webfont -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,800' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400italic' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+
+	<!-- jQuery Files -->
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.flexslider.js"></script>
+	<script type="text/javascript" src="js/contact.js"></script>
+	<script type="text/javascript" src="js/jquery.localscroll-1.2.7-min.js"></script>
+	<script type="text/javascript" src="js/jquery.mobilemenu.js"></script>
+	<script type="text/javascript" src="js/jquery.scrollTo.js"></script>
+	<script type="text/javascript" src="js/jquery.nav.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+
+</head>
+<body>
+<!-- <iframe src="indoorMaps/index.html" frameborder="0" style="height:536px;width:295px;z-index:100;"> -->
+<div id="simulator" style="background-image: url(file:///Users/andre/Downloads/CiscoDevNetIO/images/iphone5.png);background-size: 375px 626px;height: 626px;width: 375px;z-index: 999;position: absolute;top: 116px;left: 431px;cursor: move;background-position: 50% 50%;background-repeat: no-repeat no-repeat;"><button onclick="close_simulator()" style="position: absolute;padding: 16px;top: 12px;left: 320px;border-radius: 45px;background: url('images/close_btn.png') center center no-repeat;background-size: cover;font-weight: bold;border: none;"></button><div style="top: 110px;left: 62px;height: 396px;width: 248px;position: absolute;"><iframe src="indoorMaps/index.html" style="height:396px;width:248px;z-index:100;"></iframe></div></div>
+<!-- Header section -->
+
+<script type="text/javascript">
+	$('#simulator').hide();
+
+	function close_simulator () {
+		$('#simulator').hide();
+	}
+</script>
+<header>
+	<div class="top-wrap">
+		<div class="row">
+			<div class="twelve columns">
+			
+				<!-- Logo content -->
+				<div class="five columns logo">
+					<h1><a href="index.html#">indoor<span>Maps & Analytics</span></a></h1>
+				</div>
+
+				<!-- Navmenu content -->
+				<div class="seven columns">
+					<ul class="top-nav">
+						<li class="current"><a href="index.html#top">Home</a></li>
+						<li><a href="index.html#features">Features</a></li>
+						<li><a href="index.html#review">Screenshots</a></li>						
+						<li><a href="index.html#contact">Contact</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+<!-- Header section -->
+
+<!-- Slider section -->
+<section id="top">
+	<div class="row">
+		<div class="twelve columns">
+			<div class="space90"></div>
+
+			<!-- Slider content -->
+			<div class="six columns">
+				<div id="main-slider" class="flexslider">
+					<ul class="slides">
+						<li><img src="demo/slide/1.png" alt="" /></li>
+						<li><img src="demo/slide/2.png" alt="" /></li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- Content right -->
+			<div class="six columns top-info">
+				<h3>CISCO TECHNOLOGY <span>for business</span></h3>
+				<p>
+					Businesses can track and count every customer who steps into their venues.<br /><br />Customers can easily get a GPS-like route to anywhere inside of a building.
+				<!-- Praesent consequat eu arcu eget tincidunt. Sed congue suscipit ornare sed facilisis accumsan viverra. Mauris leo leo eget orci et dapibus odio.  --></p>
+				<div class="space50"></div>
+				<a class="btn" href="index.html#" onclick="show_simulator()"><span><i class="icon-iphone"></i></span>available online<em>Try it out</em></a>
+				<div class="xtra">Also available for <a href="index.html#">iPhone</a> and <a href="index.html#">Android</a></div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Slider section -->
+<script type="text/javascript">
+	function show_simulator () {
+		$('#simulator').fadeIn('slow');
+	}
+</script>
+<!-- Features/services section -->
+<section id="features">
+	<div class="row">
+		<div class="twelve columns">
+			<div class="four columns features-content">
+				<div class="ico" style="color:#2ecc71;"><i class="icon-resize"></i></div>
+				<div class="features-info">
+					<h4>Responsive</h4>
+					<p>Either Maps or Analytics both are responsive and work at any device.</p>
+				</div>
+			</div>
+
+			<div class="four columns features-content">
+				<div class="ico" style="color:#3498db;"><i class="icon-form"></i></div>
+				<div class="features-info">
+					<h4>Communication system</h4>
+					<p>You can communicate with any device in the building using Cisco Jabber chat.</p>
+				</div>
+			</div>
+
+			<div class="four columns features-content">
+				<div class="ico" style="color:#9b59b6;"><i class="icon-heartsparkle"></i></div>
+				<div class="features-info">
+					<h4>Real time</h4>
+					<p>Realtime location of any wireless device inside your building.</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="twelve columns">
+			<div class="four columns features-content">
+				<div class="ico" style="color:#e67e22;"><i class="icon-code"></i></div>
+				<div class="features-info">
+					<h4>Awarded code</h4>
+					<p>The project got a first runner up prize at the Cisco DevNet hackathon and we continue to improve it.</p>
+				</div>
+			</div>
+
+			<div class="four columns features-content">
+				<div class="ico" style="color:#e74c3c;"><i class="icon-htmlfive"></i></div>
+				<div class="features-info">
+					<h4>Maps is HTML5 based</h4>
+					<p>This means that your customer will be able to open your venue map with a browser.</p>
+				</div>
+			</div>
+
+			<div class="four columns features-content">
+				<div class="ico" style="color:#f1c40f;"><i class="icon-theme-style"></i></div>
+				<div class="features-info">
+					<h4>Graphic Charts</h4>
+					<p>We provide charts to help you view the data about past or present audience.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Features/services section -->
+
+<!-- Video section -->
+<section id="review">
+	<div class="row">
+		<div class="twelve columns">
+			<div class="eleven columns centered">
+				<h3></i>Check out the screenshots of the Dashboard</h3>
+				
+					<img src="images/screen1.png" />
+					<div style="text-align:center;color:#FFF;margin-top:8px;margin-bottom:8px;font-style:italic;">Shows real time location of every device inside the venue.</div>
+					<img src="images/screen2.png" style="margin-top:20px" />
+					<div style="text-align:center;color:#FFF;margin-top:8px;margin-bottom:8px;font-style:italic;">Alows user to create custom colision maps, for its own venue indoorMaps. </div>
+					<img src="images/screen3.png" style="margin-top:20px" />
+					<div style="text-align:center;color:#FFF;margin-top:8px;margin-bottom:8px;font-style:italic;">Dashboard which shows graphs and data related to the local network.</div>
+					<img src="images/screen4.png" style="margin-top:20px" />
+					<div style="text-align:center;color:#FFF;margin-top:8px;margin-bottom:8px;font-style:italic;">Heatmap and temperature indicator are also presented on the dashboard.</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Video section -->
+
+
+<!-- Contact section -->
+<section id="contact">
+	<div class="row">
+		<div class="twelve columns">
+			<h3><i class="icon-envelope"></i>Reach us. Request the solution</h3>
+			
+			<!-- Contact form -->
+			<div class="six columns">
+				<form id="contactForm" action="http://counterpart.x10.mx/html/fland/php/contact.php" method="post">
+					<div class="inner">
+						<i class="icon-useralt"></i>
+						<input name="senderName" id="senderName" required="required" type="text" placeholder="Name" />
+					</div>
+
+					<div class="inner">
+						<i class="icon-envelope"></i>
+						<input type="email" name="senderEmail" id="senderEmail" placeholder="Email address" required="required" />
+					</div>
+
+					<div class="inner">
+						<i class="icon-pencil"></i>
+						<textarea name="message" id="message" placeholder="Message" rows="5"></textarea>
+					</div>
+					
+					<input type="submit" id="sendMessage" name="sendMessage" value="Submit message" />
+				</form>
+				<div id="sendingMessage" class="statusMessage"><p>Sending your message. Please wait...</p></div>
+				<div id="successMessage" class="successmessage"><p><span class="success-ico"><i class="icon-ok-circle"></i></span> Thanks for sending your message! We'll get back to you shortly.</p></div>
+				<div id="failureMessage" class="errormessage"><p><span class="error-ico"><i class="icon-remove-circle"></i></span> There was a problem sending your message. Please try again.</p></div>
+				<div id="incompleteMessage" class="statusMessage"><p>Please complete all the fields in the form before sending.</p></div>
+			</div>
+
+			<!-- Contact info -->
+			<div class="six columns">
+				<ul class="contact-info">
+					<li><em><i class="icon-homealt"></i></em><span>453, Buena Vista Ave, Alameda, CA 94501</span></li>
+					<li><em><i class="icon-emailalt"></i></em><span>pthacks14@gmail.com</span></li>
+					<li><em><i class="icon-phoneold"></i></em><span>+1 (415) 465-2379</span></li>
+					<li><em><i class="icon-link"></i></em><span>http://www.dkpixels.com</span></li>
+				</ul>
+
+				
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Contact section -->
+
+<!-- Footer section -->
+<footer class="footer">
+	<div class="row">
+		<div class="twelve columns footer-inner">
+			<p>&copy; 2014. <a href="index.html#">indoorMaps & Analytics</a>. All Rights Reserved.</p>
+		</div>
+	</div>
+</footer>
+<!-- Footer section -->
+<script type="text/javascript">
+	(function($) {
+    $.fn.drags = function(opt) {
+        opt = $.extend({handle:"",cursor:"move"}, opt);
+
+        if(opt.handle === "") {
+            var $el = this;
+        } else {
+            var $el = this.find(opt.handle);
+        }
+
+        return $el.css('cursor', opt.cursor).on("mousedown", function(e) {
+            if(opt.handle === "") {
+                var $drag = $(this).addClass('draggable');
+            } else {
+                var $drag = $(this).addClass('active-handle').parent().addClass('draggable');
+            }
+            var z_idx = $drag.css('z-index'),
+                drg_h = $drag.outerHeight(),
+                drg_w = $drag.outerWidth(),
+                pos_y = $drag.offset().top + drg_h - e.pageY,
+                pos_x = $drag.offset().left + drg_w - e.pageX;
+            $drag.css('z-index', 1000).parents().on("mousemove", function(e) {
+                $('.draggable').offset({
+                    top:e.pageY + pos_y - drg_h,
+                    left:e.pageX + pos_x - drg_w
+                }).on("mouseup", function() {
+                    $(this).removeClass('draggable').css('z-index', z_idx);
+                });
+            });
+            e.preventDefault(); // disable selection
+        }).on("mouseup", function() {
+            if(opt.handle === "") {
+                $(this).removeClass('draggable');
+            } else {
+                $(this).removeClass('active-handle').parent().removeClass('draggable');
+            }
+        });
+
+    }
+})(jQuery);
+
+$('#simulator').drags();
+</script>
+</body>
+</html>
