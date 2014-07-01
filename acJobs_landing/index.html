@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>AC Jobs</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+		<link href="assets/css/bootstrap.css" rel="stylesheet">
+		<link href="assets/css/style.css" rel="stylesheet">
+		<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+		<link href="assets/css/animate.css" rel="stylesheet">
+		<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<style type="text/css">
+		.features_class:hover
+		{
+			background-color:#D0D0D0;
+		}
+		</style>
+	</head>
+	<body style="font-family:Helvetica" data-spy="scroll" data-target=".navbar" id="top">
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="index.html"><div style="text-shadow:none;border:1px white solid;color:white;font-family:'Pacifico';font-size:22px;padding:8px 17px 8px 17px;font-weight:lighter;">AC Jobs</div></a>
+					<div class="nav-collapse collapse">
+						<ul class="nav">
+							<li class="option active"><a href="javascript:void(0)" onclick="$('html, body').animate({scrollTop: $('#top').offset().top}, 1000);">Home</a></li>
+							<li class="option"><a href="javascript:void(0)" onclick="$('html, body').animate({scrollTop: $('#features_sec').offset().top}, 1000);">Features</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<section id="top">
+			<div class="hero-unit landing">
+				<div class="container">
+					<div class="row">
+						<div class="span6 promotext">
+							<h1>Looking for ways to earn money?</h1>
+							<p> AC Jobs is the place to find jobs and offer home services in the Alameda County. This app was the Innovator prize winner at the Alameda County App Challenge Hackathon.</p>
+							<br />
+							<p><a href="#" class="appstore btn-store"></a><a href="#" class="googleplay btn-store"></a></p>
+						</div>
+						<div class="span6 iphone-hand"></div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="hero-pattern">
+			<div class="container"><span class="orange"></span><span class="green"></span></div>
+		</div>
+		<div class="container" style="margin-bottom:60px;">
+			<div class="row landing-tips">
+				<div class="span4">
+					<img src="assets/img/flat-phone.png" alt="icon"/>
+					<h3>Multi Platform</h3>
+					<p> Downloadable on the App Store (iOS), Google Play (Android) and it has its Web version. </p>
+				</div>
+				<div class="span4">
+					<img src="assets/img/flat-user.png" alt="icon"/>
+					<h3>Community Friendly</h3>
+					<p> AC Jobs services creates an interaction between the residents of a certain neighborhood, and help the community grow. </p>
+				</div>
+				<div class="span4">
+					<img src="assets/img/flat-help.png" alt="icon"/>
+					<h3>Intuitive Interface</h3>
+					<p> Easy access sections, clean design and easy to use.</p>
+				</div>
+			</div>
+		</div>
+		<section id="features_sec">
+			<div class="container">
+				<div id="features" class="row land-feat">
+					<div class="span6 phone"><img  class="features_img" src="assets/img/iphone1.png" alt="iphone"/></div>
+					<div class="span6 list" style="margin-top:400x;">
+						<h2>Application Features</h2>
+						<ul>
+							<li id="features_1" class="features_class"  onmouseover="change_ft_1();$('.features_img').attr('src','assets/img/iphone1.png');" style="border-radius: 5px;
+padding-right: 40px;padding: 10px 0 10px 50px;
+background: url('assets/img/flat-check.png') no-repeat;
+background-position: left 15px;">
+								<h4>Find Jobs</h4>
+								<p> ACJobs pulls jobs listings from the internet and relate them to the Alameda County’s “Certified Green Business” dataset. Afterwards, the information is made available via an intuitive interface in a column view.</p>
+							</li>
+							<li id="features_2"  style="border-radius: 5px;
+padding-right: 40px;padding: 10px 0 10px 50px;
+background: url('assets/img/flat-check2.png') no-repeat;
+background-position: left 15px;" class="features_class" onmouseover="change_ft_2();$('.features_img').attr('src','assets/img/iphone2.png');">
+								<h4>Spot Companies</h4>
+								<p> Using ESRI maps services we are able to plot a map with all the companies in the Alameda County area and check their respective job oportunities. </p>
+							</li>
+							<li id="features_3"  style="border-radius: 5px;
+padding-right: 40px;padding: 10px 0 10px 50px;
+background: url('assets/img/flat-check2.png') no-repeat;
+background-position: left 15px;" class="features_class" onmouseover="change_ft_3();$('.features_img').attr('src','assets/img/iphone3.png');">
+								<h4>Post Services</h4>
+								<p> The application even allows people to post opportunities to earn money locally via more informal services like walking dogs and doing yard work. </p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>	
+		<script type="text/javascript">
+		var id = 'features_1';	
+
+		function change_ft_1() {
+			
+			$('#features_1').css('background', "url('assets/img/flat-check.png') no-repeat");
+			$('#features_1').css('background-position', "left 15px");
+			changeback_ft();
+			id = 'features_1';
+		}
+
+
+		function change_ft_2() {
+			
+			$('#features_2').css('background', "url('assets/img/flat-check.png') no-repeat");
+			$('#features_2').css('background-position', "left 15px");
+			changeback_ft();
+			id = 'features_2';
+		}
+
+
+		function change_ft_3() {
+			
+			$('#features_3').css('background', "url('assets/img/flat-check.png') no-repeat");
+			$('#features_3').css('background-position', "left 15px");
+			changeback_ft();
+			id = 'features_3';
+		}
+
+		function changeback_ft()
+		{
+			$('#'+id).css('background', "url('assets/img/flat-check2.png') no-repeat");
+			$('#'+id).css('background-position', "left 15px");
+		}
+		</script>
+		<footer>
+			<div class="footer-lower">
+				<div class="container">
+					<div class="row">
+						<p class="span6 copy">ACJobs ©Designed and Developed by <a href="https://github.com/ptprojects/ptprojects.github.io" target="_blank">PtHacks</a></p>
+						<div class="span6">
+							<ul class="mini-social pull-right">
+								<li><a href="#" title="Email Us" class="a-icon email"></a><span style="margin-left:10px;line-height:30px;color: rgb(23, 23, 88);">de_castro10@hotmail.com</span></li>
+							</ul>
+						</div>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script src="assets/js/jquery.js"></script><script src="assets/js/bootstrap-transition.js"></script><script src="assets/js/bootstrap-alert.js"></script><script src="assets/js/bootstrap-modal.js"></script><script src="assets/js/bootstrap-dropdown.js"></script><script src="assets/js/bootstrap-scrollspy.js"></script><script src="assets/js/bootstrap-tab.js"></script><script src="assets/js/bootstrap-tooltip.js"></script><script src="assets/js/bootstrap-popover.js"></script><script src="assets/js/bootstrap-button.js"></script><script src="assets/js/bootstrap-collapse.js"></script><script src="assets/js/bootstrap-carousel.js"></script><script src="assets/js/bootstrap-typeahead.js"></script><script src="assets/js/global.js"></script><script src="assets/js/waypoints.js"></script><script>$(document).ready(function (){$('.actooltip').tooltip();singlePage();LandingAnimations();});</script>
+	</body>
+</html>
