@@ -36,7 +36,7 @@
 </head>
 <body>
 <!-- <iframe src="indoorMaps/index.html" frameborder="0" style="height:536px;width:295px;z-index:100;"> -->
-<div id="simulator" style="background-image: url(images/iphone5.png);background-size: 375px 626px;height: 626px;width: 375px;z-index: 999;position: absolute;top: 116px;left: 431px;cursor: move;background-position: 50% 50%;background-repeat: no-repeat no-repeat;"><button onclick="close_simulator()" style="position: absolute;padding: 16px;top: 12px;left: 320px;border-radius: 45px;background: url('images/close_btn.png') center center no-repeat;background-size: cover;font-weight: bold;border: none;"></button><div style="top: 110px;left: 62px;height: 396px;width: 248px;position: absolute;"><iframe src="indoorMaps/index.html" style="height:396px;width:248px;z-index:100;"></iframe></div></div>
+<div id="simulator" style="background-image: url(images/iphone5.png);background-size: 375px 626px;height: 626px;width: 375px;z-index: 999;position: absolute;top: 116px;left: 431px;cursor: move;background-position: 50% 50%;background-repeat: no-repeat no-repeat;"><button onclick="close_simulator()" style="position: absolute;padding: 16px;top: 12px;left: 320px;border-radius: 45px;background: url('images/close_btn.png') center center no-repeat;background-size: cover;font-weight: bold;border: none;"></button><div style="top: 110px;left: 62px;height: 396px;width: 248px;position: absolute;"><iframe id="iframe_sim" src="indoorMaps/index.html" style="height:396px;width:248px;z-index:100;"></iframe></div></div>
 <!-- Header section -->
 
 <script type="text/javascript">
@@ -104,6 +104,7 @@
 <script type="text/javascript">
 	function show_simulator () {
 		$('#simulator').fadeIn('slow');
+		document.getElementById('iframe_sim').contentWindow.change_z_index();
 	}
 </script>
 <!-- Features/services section -->
