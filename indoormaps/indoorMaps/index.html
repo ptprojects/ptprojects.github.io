@@ -1,627 +1,599 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title></title>
-	<script type="text/javascript" src="js/jquery.js"></script>
-	<meta name="viewport" content="width=device-width, user-scalable=no">
-	<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-	
-	<style type="text/css">
-	html {
-		max-width:400px;
-	}
-	
-	::-webkit-scrollbar { 
-   	 display: none; 
-	}
-	
-	#mapCanvas
-	{
-		background:url("moscone_west.png") center center no-repeat;
-		border: 1px black solid;
-		height: 497px;
-		width:1000px;
-		background-size: 1000px 500px;
-	}
-	#buttons
-	{
-		width: 95%;
-		height:50px;
-		line-height: 50px;
-
-		background:#FFF;
-		z-index:99;
-		top:20px;
-		border-radius: 3px;
-		margin: auto;
-		/*border: 1px black solid;*/
-		box-shadow: 0px 0px 3px #888888;
-	}
-	body
-	{
-		margin: 0;
-		background: url("grid.png") center center no-repeat;
-	}
-	#canvas
-	{
-		width:100% !important;
-		height:100% !important;
-	}
-	.inner
-	{
-		 position: absolute; 
-	}
-	#traceButton
-	{
-		display: none;
-	}
-	#targets
-	{
-		display: inline;
-	}
-
-	#sideBtn
-	{
-		display: block;
-		float:left;		
-		width:40px;
-		height:50px;text-align:center;
-		/*padding: 15px 20px;*/
-		margin-right: 5px;
-
-		/*background:url('img2/menu.png') center center no-repeat;*/
-		background-size: 36px 36px;
-
-		cursor:pointer;
-		border-radius: 10px;
-	}
-	
-	#sideSearch
-	{
-		display: block;
-		float:left;
-		background-size: 36px 36px;
-		cursor:pointer;
-		border-radius: 10px;
-		margin-left: 11px;
-	}
-
-	
-	
-	
-	#search
-	{
-		display:block;
-		float:left;
-		margin-top:9px;
-		border-radius: 2px;
-		height: 30px;
-		border:0;
-		width: 60%;
-		font-size:18px;
-		font-family: Helvetica, sans-serif;
-		padding-left: 10px;
-		font-weight: 100;
-		outline:none;
-	}
-	#sideMenu
-	{
-		display: none;
-		top:60px;
-		z-index:30;
-		width:95%;
-		background:#D64635;		
-		margin: auto;
-		border-radius:3px;
-		box-shadow: 0px 0px 2px #888888;
-		z-index: 110;
-	}
-	#fMarker
-	{
-		height:30px;
-		z-index:28;
-		background-size:cover;
-		background-image:url('img/pinMarker.png');
-		width:30px;
-		top:-20px;
-		position:fixed;
-	}
-	
-	
-	
-	
-	.locationsCSS
-	{
-		display:block;
-		
-		padding-top:10px;
-		padding-bottom:14px;
-		padding-left:14px;
-		font-weight:100;
-		color: #FFF;
-		font-family: Helvetica, sans-serif;
-		cursor:pointer;
-		z-index: 999;
-
-	}
-	.locationsCSS:hover {
-		background:#be3626;
-	}
-
-	#logo
-	{
-		display: inline;
-		height: 50px;
-		text-align: center;
-		width: 50px;
-		font-size: 25px;
-		color: white;
-		margin-left: 3px;
-		background:#FF0000;
-		cursor:pointer;
-		float: left;
-	}
-	.fa-chevron-down
-	{
-		color:#999;
-		font-size: 18px;
-		
-	}
-	.fa-search
-	{
-		color: #888;
-		font-size: 18px;
-		
-	}
-	#logoDiv{
-		background: url('img/logo.png') center center;
-		background-size: 100px;
-		position: fixed;
-		bottom:5px; 
-		z-index: 10;
-		height: 20px;
-		width: 100px;
-		left: 5px;
-	}
-	</style>
-</head>
-<body>
-<div id="fixed" style="width:100%;position:fixed;z-index:90;top:10px;">
-
-
-
-	<div id="buttons" >
-		<div id="sideSearch" onclick="sideMenuBtn()" ><i class="fa fa-search"></i></div>
-		<input type="text" id="search" onkeyup="doSearch()" onclick="clickSearch()" placeholder="Search" autocomplete="off"/>
-		<div style="display:block;float:left;margin-top:9px;width:1px;height:32px;border-left:1px solid #CCC;margin-right:5px"></div>
-
-
-		<div id="sideBtn" onclick="sideMenuBtn()" ><i class="fa fa-chevron-down" ></i></div>
-	</div>
-	<div id="sideMenu">
-	
-</div>
-</div>
-
-<div id="canvas">
-
-<div id="container" style="position:relative;width:400px;height:600px;border:1px solid #000;overflow:scroll;margin-top:0px">
-
-<div id="mapCanvas" style="zoom: 1.3;top:0px;left:0px;" ><div id="markerDiv"></div><div id="logoDiv"></div></div>
-<svg id="polyCanvas" class="inner" height="497" width="1000" onclick="closeMenu()" style="top:0px;left:0px;z-index:3;zoom: 1.3/*border: 1px black solid;*/">
-	<polyline id="polyLine" points="" style="fill:none;stroke:#0066CC;stroke-width:7;opacity:0.7;boder:3px black solid;" />
-</svg>
-
-</div>
-
-	
-</div>
-
-
-<script type="text/javascript" src="js/map.js"></script>
-<script type="text/javascript">
-
-function closeMenu()
-{
-	if(isDown)
-	{
-		$('#sideMenu').slideUp();
-		isDown=false;
-
-		$('#simulator').css({
-			    'overflow': 'auto',
-			    'height': 'auto'
-			});
-	}	
-}
-
-var isDown=false;
-var finalMarkerI, finalMarkerJ;
-
-function clickSearch()
-{
-	$('#sideMenu').slideDown();
-	isDown=true;
-
-	$('#simulator').css({
-					    'overflow': 'hidden',
-					    'height': '100%'
-					});
-}
-
-function doSearch()
-{
-
-	var currentSearch = document.getElementById('search').value;
-
-	for (var t=1;t<countRadioLocation;t++) {
-	  var key2='t'+String(t);	
-
-	  if(String(document.getElementById(key2).innerHTML).toLowerCase().indexOf(currentSearch.toLowerCase())>-1)
-	  {
-	  	document.getElementById(key2).style.display='block';
-	  }else
-	  {
-	  	document.getElementById(key2).style.display='none';
-	  }	
-	  
-	}
-
-}
-
-function sideMenuBtn()
-{
-	if(!isDown)
-	{
-		$('#sideMenu').slideDown();
-		isDown=true;
-
-		$('#simulator').css({
-					    'overflow': 'hidden',
-					    'height': '100%'
-					});
-	}else
-	{
-		$('#sideMenu').slideUp();
-		isDown=false;
-
-		$('#simulator').css({
-			    'overflow': 'auto',
-			    'height': 'auto'
-			});
-	}	
-}
-
-
-//---------------------------------------------------------------------
-var mouseOn;//Variable to do mouseOver paint for wall
-var countRadioLocation=1;
-//Targets--------------------------------------
-var targets={"Arcades":{"i":22,"j":27,"name":"Arcades"},"Hackathon":{"i":12,"j":51,"name":"Hackathon"},"Escalator to 1st Fl":{"i":37,"j":54,"name":"Escalator to 1st Fl"},"Escalator to 3rd Fl":{"i":41,"j":54,"name":"Escalator to 3rd Fl"},"Elevators":{"i":20,"j":83,"name":"Elevators"},"Stairs":{"i":31,"j":88,"name":"Stairs"},"DevNet Showcase":{"i":36,"j":75,"name":"DevNet Showcase"},"Theater":{"i":26,"j":80,"name":"Theater"},"Mens Restroom":{"i":16,"j":71,"name":"Mens Restroom"},"Womens Restroom":{"i":11,"j":71,"name":"Womens Restroom"},"DevNet Lounge":{"i":32,"j":9,"name":"DevNet Lounge"},"Rooms 2000-2012":{"i":2,"j":73,"name":"Rooms 2000-2012"},"Rooms 2014-2024":{"i":4,"j":18,"name":"Rooms 2014-2024"},"DevNet Learning Labs":{"i":25,"j":49,"name":"DevNet Learning Labs"}};
-var oldRoute=[new Array()];
-
-//Div height and width--------------------------
-var h, w;
-
-h=10;
-w=10;
-
-//Map height and width--------------------------------
-
-var mpH, mpW;
-
-mpH=400;
-mpW=400;
-
-//Load---------------------------------------------------
-
-function loadLocations()
-{
-
-	for (var key in targets) {
-	   var obj = targets[key];
-	   var ss='t'+countRadioLocation;
-	   var ss2="traceRoute('"+key+"')";
-	   //console.log("putaqueopariu "+ss);
-	   $('#sideMenu').append('<div class="locationsCSS" id="t'+countRadioLocation+'" onclick="'+ss2+'" style="z-index: 111;">'+ key+'</div>');
-	   countRadioLocation++;
-	}
-
-}
-
-loadLocations();
-
-
-
-
-//User ------------------------------
-var currentPosI, currentPosJ;
-
-currentPosI=53;
-currentPosJ=10;
-
-
-initUser(currentPosI,currentPosJ);
-
-
-
-function initUser(positionI,positionJ)
-{
-	currentPosI=positionI;
-	currentPosJ=positionJ;
-	centerItVariableWidthInst(document.getElementById('userMarker'), document.getElementById('container'));
-	$('#mapCanvas').append('<div id="userMarker" style="position:absolute;left:'+((currentPosI*w)-4)+'px;width:11px;top:'+((currentPosJ*h)-7)+'px;height:11px;border-radius:45px;background:#5586BC;z-index:4;border:3px #FFF solid;"></div>');
-
-	//---animation
-	$('#mapCanvas').append('<div id="userPulse" style="position:absolute;left:'+((currentPosI*w)-23)+'px;width:55px;top:'+((currentPosJ*h)-27)+'px;height:55px;border-radius:44px;background-image:radial-gradient(circle closest-side,rgba(116,165,219,0.1),rgba(116,165,219,0.4));;z-index:3;"></div>');
-	var $dt = $(document.getElementById('userPulse'));
-	pulse($dt,1200,'linear',{opacity:0},{opacity:0.6},function(){return false;});
-
-	
-
-}
-
-function pulse(elem, duration, easing, props_to, props_from, until) {
-    elem.animate(
-        props_to,
-        duration,
-        easing,
-        function() {
-            if ( until() == false )
-            {
-                pulse(elem, duration, easing, props_from, props_to, until);
-            }
-        }
-    );
-}
-
-function moveUser(newPosI,newPosJ)
-{
-	document.getElementById(newPosJ+'_'+newPosI).style.background='#00AA00';
-	document.getElementById(currentPosJ+'_'+currentPosI).style.background='#FFF';
-	currentPosI=newPosI;
-	currentPosJ=newPosJ;
-}
-
-//----------------------------
-
-
-
-	function euclidDist(a, b) {
-		return Math.abs(a.x-b.x)+Math.abs(a.y-b.y);
-	}
-	function fillWith(obj, value, rows, col) {
-		for(var i=0; i<rows; i++) {
-			var aux = [];
-			for(var j=0; j<col; j++) {
-				aux.push(value);
+	<head>
+		<title></title>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<meta name="viewport" content="width=device-width, user-scalable=no">
+		<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+		<style type="text/css">
+			html
+			{
+				max-width: 400px;
 			}
-			obj.push(aux);
-		}
-	}
-	
-	
-	// returns the direction to follow: [r]ight, [l]eft, [d]own or [u]p?
-	function getDir(player_x, player_y, target_x, target_y, map, range) {
-		player = { x: player_x, y: player_y };
-		target = { x: target_x, y: target_y, prev: 'x' };
-		dir = [[1, 0, 'u'], [-1, 0, 'd'], [0, 1, 'l'], [0, -1, 'r'],[-1,-1,'dr'],[1,-1,'ur'],[-1,1,'dl'],[1,1,'ul']];
-		visi = [];
-		fillWith(visi, false, map.height, map.width);
-		
-		queue = [];
-		queue.push(target);
-		while(queue.length != 0) {
-			aux = queue.shift();
-			//console.log(player.x +" "+player.y +" "+aux.x+" "+ aux.y);
-			if(aux.x == player.x && aux.y == player.y) return aux.prev; // finally!
-			//else if(euclidDist(aux, player) > range) continue; // too far
-			else if(aux.x < 0 || aux.x >= map.width || aux.y < 0 || aux.y >= map.height) continue; // i shouldn't be here
-			else if(map.pos[aux.x][aux.y] == 1) continue; // i can't walk through walls =/
-			else if(visi[aux.x][aux.y] == 1) continue; // i've been here before
-			visi[aux.x][aux.y] = 1;
-			
-			
-			var aux2 = new Object();
-			for(var i=0; i<8; i++) {
-				aux2.x = aux.x+dir[i][0];
-				aux2.y = aux.y+dir[i][1];
-				aux2.prev = dir[i][2];
-				
-				queue.push(aux2);
-				var aux2 = new Object();
+			::-webkit-scrollbar
+			{
+				display: none;
 			}
-		}
-		
-		return "Do nothing";
-	}
-									
-
-/* Trace Route =================================================================================================================== */
-
-function scrollto(element){
-$('#container').animate({ scrollTop: ($(element).offset().top), scrollLeft: ($(element).offset().left)}, 1500);
-};
-
-
-
-function centerItVariableWidth(target, outer){
-  var out = $(outer);
-  var tar = $(target);
-  var x = out.width();
-  var y = tar.outerWidth(true);
-  var z = tar.index();
-  $('#container').animate({scrollLeft: 190+(Math.max(0, (y * z) + (x - y)))}, 1500);
-}
-
-function centerItVariableWidthInst(target, outer){
-  var out = $(outer);
-  var tar = $(target);
-  var x = out.width();
-  var y = tar.outerWidth(true);
-  var z = tar.index();
-  $('#container').animate({scrollLeft: 190+(Math.max(0, (y * z) + (x - y)))}, 0);
-}
-
-
-
-var map = {
-			height: 100,
-			width: 100,
-			pos:mapMatriz 
-		};
-
-function traceRoute(tagName)
-{
-	document.getElementById('search').value=tagName;
-	clearRoute();
-	$('#sideMenu').slideUp();
-	isDown=false;
-
-	//Liga todos de volta
-	for (var t=1;t<countRadioLocation;t++) {
-	  //var obj = targets[key];
-	  
-	  var key2='t'+String(t);	
-	  //console.log(key2);
-
-	  document.getElementById(key2).style.display='block';
-	}
-	
-	//var targetKey=document.querySelector('input[name="targ"]:checked').value;
-	trace(targets[tagName].j,targets[tagName].i);
-	
-	
-	
-	/* Animate */
-	
-	
-	
-	
-	
-	//scrollto(document.getElementById('userMarker'));
-	
-	centerItVariableWidth(document.getElementById('userMarker'), document.getElementById('container'));
-	
-	
-	
-	$("#mapCanvas").animate({
-    zoom: 1.45
-	}, 1100);
-	
-	$("#polyCanvas").animate({
-    zoom: 1.45
-	}, 1100);
-	
-	
-}
-
-function clearRoute()
-{
-	for (var b = 0; b <oldRoute[0].length; b++) {
-		$('#'+oldRoute[0][b]).html("");
-	};
-	oldRoute[0]=new Array();
-
-}
-
-function trace(targetPosX, targetPosY) {
-	x1 = targetPosX;
-	y1 = targetPosY;
-	
-	x2 = currentPosI;
-	y2 = currentPosJ;
-	
-	var polyP="";
-	//$('#polyCanvas').html('');
-	
-	$('#polyLine').attr('points','');
-	
-
-	oldRoute[0].push(y2+'_'+x2);
-
-	while(true)
-	{	
-		if(x2==x1 && y2==y1)
-		{
-			break;
-		}	
-			
-		direction = getDir(y2, x2, y1, x1, map, 99);
-
-		if(direction == 'r')
-			x2++;
-		else if(direction == 'l')
-			x2--;
-		else if(direction == 'd')
-			y2++;
-		else if(direction == 'u')
-			y2--;
-		else if(direction=='dr')
-		{
-			y2++;
-			x2++;
-		}
-		else if(direction=='ur')
-		{
-			y2--;
-			x2++;
-		}
-		else if(direction=='dl')
-		{
-			y2++;
-			x2--;
-		}
-		else if(direction=='ul')
-		{
-			y2--;
-			x2--;
-		}
-			
-		if(x2==x1 && y2==y1)
-		{	
-			oldRoute[0].push(y2+'_'+x2);
-			
-			$('#markerDiv').html('');
-			for (var b = 0; b <oldRoute[0].length; b++) {
-				var IandJ = oldRoute[0][b].split('_');
-				if(b==oldRoute[0].length-1)
+			#mapCanvas
+			{
+				background: url("moscone_west.png") center center no-repeat;
+				background-size: 1000px 500px;
+				border: 1px black solid;
+				height: 497px;
+				width: 1000px;
+			}
+			#buttons
+			{
+				background: #FFF;
+				border-radius: 3px;
+				box-shadow: 0px 0px 3px #888888;
+				height: 50px;
+				line-height: 50px;
+				margin: auto;
+				top: 20px;
+				width: 95%;
+				z-index: 99;
+			}
+			body
+			{
+				background: url("grid.png") center center no-repeat;
+				margin: 0;
+			}
+			#canvas
+			{
+				height: 100% !important;
+				width: 100% !important;
+			}
+			.inner
+			{
+				position: absolute;
+			}
+			#traceButton
+			{
+				display: none;
+			}
+			#targets
+			{
+				display: inline;
+			}
+			#sideBtn
+			{
+				background-size: 36px 36px;
+				border-radius: 10px;
+				cursor: pointer;
+				display: block;
+				float: left;
+				height: 50px;
+				margin-right: 5px;
+				text-align: center;
+				width: 40px;
+			}
+			#sideSearch
+			{
+				background-size: 36px 36px;
+				border-radius: 10px;
+				cursor: pointer;
+				display: block;
+				float: left;
+				margin-left: 11px;
+			}
+			#search
+			{
+				border: 0;
+				border-radius: 2px;
+				display: block;
+				float: left;
+				font-family: Helvetica, sans-serif;
+				font-size: 18px;
+				font-weight: 100;
+				height: 30px;
+				margin-top: 9px;
+				outline: none;
+				padding-left: 10px;
+				width: 60%;
+			}
+			#sideMenu
+			{
+				background: #D64635;
+				border-radius: 2px;
+				box-shadow: 1px 1px 4px #888888;
+				display: none;
+				height: 320px;
+				margin: auto;
+				overflow-x: scroll;
+				top: 60px;
+				width: 95%;
+				z-index: 110;
+				z-index: 30;
+				-moz-box-shadow: inset 0 -7px 9px -7px rgba(0,0,0,0.4);
+				-webkit-box-shadow: inset 0 -7px 9px -7px rgba(0,0,0,0.4);
+				box-shadow: inset 0 -7px 9px -7px rgba(0,0,0,0.4);
+			}
+			#fMarker
+			{
+				background-image: url('img/pinMarker.png');
+				background-size: cover;
+				height: 30px;
+				position: fixed;
+				top: -20px;
+				width: 30px;
+				z-index: 28;
+			}
+			.locationsCSS
+			{
+				color: #FFF;
+				cursor: pointer;
+				display: block;
+				font-family: Helvetica, sans-serif;
+				font-weight: 100;
+				padding-bottom: 14px;
+				padding-left: 14px;
+				padding-top: 10px;
+				z-index: 999;
+			}
+			.locationsCSS:hover
+			{
+				background: #be3626;
+			}
+			#logo
+			{
+				background: #FF0000;
+				color: white;
+				cursor: pointer;
+				display: inline;
+				float: left;
+				font-size: 25px;
+				height: 50px;
+				margin-left: 3px;
+				text-align: center;
+				width: 50px;
+			}
+			.fa-chevron-down
+			{
+				color: #999;
+				font-size: 18px;
+			}
+			.fa-search
+			{
+				color: #888;
+				font-size: 18px;
+			}
+			#logoDiv
+			{
+				background: url('img/logo.png') center center;
+				background-size: 100px;
+				bottom: 5px;
+				height: 20px;
+				left: 5px;
+				position: fixed;
+				width: 100px;
+				z-index: 10;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="fixed" style="width:100%;position:fixed;z-index:90;top:10px;">
+			<div id="buttons" >
+				<div id="sideSearch" onclick="sideMenuBtn()" ><i class="fa fa-search"></i></div>
+				<input type="text" id="search" onkeyup="doSearch()" onclick="clickSearch()" placeholder="Search" autocomplete="off"/>
+				<div style="display:block;float:left;margin-top:9px;width:1px;height:32px;border-left:1px solid #CCC;margin-right:5px"></div>
+				<div id="sideBtn" onclick="sideMenuBtn()" ><i class="fa fa-chevron-down" ></i></div>
+			</div>
+			<div id="sideMenu">
+			</div>
+		</div>
+		<div id="canvas">
+			<div id="container" style="position:relative;width:400px;height:600px;border:1px solid #000;overflow:scroll;margin-top:0px">
+				<div id="mapCanvas" style="zoom: 1.3;top:0px;left:0px;" >
+					<div id="markerDiv"></div>
+					<div id="logoDiv"></div>
+				</div>
+				<svg id="polyCanvas" class="inner" height="497" width="1000" onclick="closeMenu()" style="top:0px;left:0px;z-index:3;zoom: 1.3/*border: 1px black solid;*/">
+					<polyline id="polyLine" points="" style="fill:none;stroke:#0066CC;stroke-width:7;opacity:0.7;boder:3px black solid;" />
+				</svg>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/map.js"></script>
+		<script type="text/javascript">
+			function closeMenu()
+			{
+				if(isDown)
 				{
-					break;
-				}
-
-				else if(b==oldRoute[0].length-2)
-				{
-					finalMarkerI=((IandJ[1]*w)+((w/2)-1));
-					finalMarkerJ=((IandJ[0]*h)+((h/5)-1));
-					//console.log("peniano "+finalMarkerI+" "+finalMarkerJ);
+					$('#sideMenu').slideUp();
+					isDown=false;
+			
+					$('#simulator').css({
+						    'overflow': 'auto',
+						    'height': 'auto'
+						});
 				}	
+			}
+			
+			var isDown=false;
+			var finalMarkerI, finalMarkerJ;
+			
+			function clickSearch()
+			{
+				$('#sideMenu').slideDown();
+				isDown=true;
+			
+				$('#simulator').css({
+								    'overflow': 'hidden',
+								    'height': '100%'
+								});
+			}
+			
+			function doSearch()
+			{
+			
+				var currentSearch = document.getElementById('search').value;
+			
+				for (var t=1;t<countRadioLocation;t++) {
+				  var key2='t'+String(t);	
+			
+				  if(String(document.getElementById(key2).innerHTML).toLowerCase().indexOf(currentSearch.toLowerCase())>-1)
+				  {
+				  	document.getElementById(key2).style.display='block';
+				  }else
+				  {
+				  	document.getElementById(key2).style.display='none';
+				  }	
+				  
+				}
+			
+			}
+			
+			function sideMenuBtn()
+			{
+				if(!isDown)
+				{
+					$('#sideMenu').slideDown();
+					isDown=true;
+			
+					$('#simulator').css({
+								    'overflow': 'hidden',
+								    'height': '100%'
+								});
+				}else
+				{
+					$('#sideMenu').slideUp();
+					isDown=false;
+			
+					$('#simulator').css({
+						    'overflow': 'auto',
+						    'height': 'auto'
+						});
+				}	
+			}
+			
+			
+			//---------------------------------------------------------------------
+			var mouseOn;//Variable to do mouseOver paint for wall
+			var countRadioLocation=1;
+			//Targets--------------------------------------
+			var targets={"Arcades":{"i":22,"j":27,"name":"Arcades"},"Hackathon":{"i":12,"j":51,"name":"Hackathon"},"Escalator to 1st Fl":{"i":37,"j":54,"name":"Escalator to 1st Fl"},"Escalator to 3rd Fl":{"i":41,"j":54,"name":"Escalator to 3rd Fl"},"Elevators":{"i":20,"j":83,"name":"Elevators"},"Stairs":{"i":31,"j":88,"name":"Stairs"},"DevNet Showcase":{"i":36,"j":75,"name":"DevNet Showcase"},"Theater":{"i":26,"j":80,"name":"Theater"},"Mens Restroom":{"i":16,"j":71,"name":"Mens Restroom"},"Womens Restroom":{"i":11,"j":71,"name":"Womens Restroom"},"DevNet Lounge":{"i":32,"j":9,"name":"DevNet Lounge"},"Rooms 2000-2012":{"i":2,"j":73,"name":"Rooms 2000-2012"},"Rooms 2014-2024":{"i":4,"j":18,"name":"Rooms 2014-2024"},"DevNet Learning Labs":{"i":25,"j":49,"name":"DevNet Learning Labs"}};
+			var oldRoute=[new Array()];
+			
+			//Div height and width--------------------------
+			var h, w;
+			
+			h=10;
+			w=10;
+			
+			//Map height and width--------------------------------
+			
+			var mpH, mpW;
+			
+			mpH=400;
+			mpW=400;
+			
+			//Load---------------------------------------------------
+			
+			function loadLocations()
+			{
+			
+				for (var key in targets) {
+				   var obj = targets[key];
+				   var ss='t'+countRadioLocation;
+				   var ss2="traceRoute('"+key+"')";
+				   //console.log("putaqueopariu "+ss);
+				   $('#sideMenu').append('<li class="locationsCSS" id="t'+countRadioLocation+'" onclick="'+ss2+'" style="z-index: 111;">'+ key+'</li>');
+				   countRadioLocation++;
+				}
+			
+			}
+			
+			loadLocations();
+			
+			
+			
+			
+			//User ------------------------------
+			var currentPosI, currentPosJ;
+			
+			currentPosI=53;
+			currentPosJ=10;
+			
+			
+			initUser(currentPosI,currentPosJ);
+			
+			
+			
+			function initUser(positionI,positionJ)
+			{
+				currentPosI=positionI;
+				currentPosJ=positionJ;
+				centerItVariableWidthInst(document.getElementById('userMarker'), document.getElementById('container'));
+				$('#mapCanvas').append('<div id="userMarker" style="position:absolute;left:'+((currentPosI*w)-4)+'px;width:11px;top:'+((currentPosJ*h)-7)+'px;height:11px;border-radius:45px;background:#5586BC;z-index:4;border:3px #FFF solid;"></div>');
+			
+				//---animation
+				$('#mapCanvas').append('<div id="userPulse" style="position:absolute;left:'+((currentPosI*w)-23)+'px;width:55px;top:'+((currentPosJ*h)-27)+'px;height:55px;border-radius:44px;background-image:radial-gradient(circle closest-side,rgba(116,165,219,0.1),rgba(116,165,219,0.4));;z-index:3;"></div>');
+				var $dt = $(document.getElementById('userPulse'));
+				pulse($dt,1200,'linear',{opacity:0},{opacity:0.6},function(){return false;});
+			
 				
-				polyP += ((IandJ[1]*w)+((w/2)-1))+","+((IandJ[0]*h)+((h/5)-1))+" ";
+			
+			}
+			
+			function pulse(elem, duration, easing, props_to, props_from, until) {
+			    elem.animate(
+			        props_to,
+			        duration,
+			        easing,
+			        function() {
+			            if ( until() == false )
+			            {
+			                pulse(elem, duration, easing, props_from, props_to, until);
+			            }
+			        }
+			    );
+			}
+			
+			function moveUser(newPosI,newPosJ)
+			{
+				document.getElementById(newPosJ+'_'+newPosI).style.background='#00AA00';
+				document.getElementById(currentPosJ+'_'+currentPosI).style.background='#FFF';
+				currentPosI=newPosI;
+				currentPosJ=newPosJ;
+			}
+			
+			//----------------------------
+			
+			
+			
+				function euclidDist(a, b) {
+					return Math.abs(a.x-b.x)+Math.abs(a.y-b.y);
+				}
+				function fillWith(obj, value, rows, col) {
+					for(var i=0; i<rows; i++) {
+						var aux = [];
+						for(var j=0; j<col; j++) {
+							aux.push(value);
+						}
+						obj.push(aux);
+					}
+				}
+				
+				
+				// returns the direction to follow: [r]ight, [l]eft, [d]own or [u]p?
+				function getDir(player_x, player_y, target_x, target_y, map, range) {
+					player = { x: player_x, y: player_y };
+					target = { x: target_x, y: target_y, prev: 'x' };
+					dir = [[1, 0, 'u'], [-1, 0, 'd'], [0, 1, 'l'], [0, -1, 'r'],[-1,-1,'dr'],[1,-1,'ur'],[-1,1,'dl'],[1,1,'ul']];
+					visi = [];
+					fillWith(visi, false, map.height, map.width);
+					
+					queue = [];
+					queue.push(target);
+					while(queue.length != 0) {
+						aux = queue.shift();
+						//console.log(player.x +" "+player.y +" "+aux.x+" "+ aux.y);
+						if(aux.x == player.x && aux.y == player.y) return aux.prev; // finally!
+						//else if(euclidDist(aux, player) > range) continue; // too far
+						else if(aux.x < 0 || aux.x >= map.width || aux.y < 0 || aux.y >= map.height) continue; // i shouldn't be here
+						else if(map.pos[aux.x][aux.y] == 1) continue; // i can't walk through walls =/
+						else if(visi[aux.x][aux.y] == 1) continue; // i've been here before
+						visi[aux.x][aux.y] = 1;
+						
+						
+						var aux2 = new Object();
+						for(var i=0; i<8; i++) {
+							aux2.x = aux.x+dir[i][0];
+							aux2.y = aux.y+dir[i][1];
+							aux2.prev = dir[i][2];
+							
+							queue.push(aux2);
+							var aux2 = new Object();
+						}
+					}
+					
+					return "Do nothing";
+				}
+												
+			
+			/* Trace Route =================================================================================================================== */
+			
+			function scrollto(element){
+			$('#container').animate({ scrollTop: ($(element).offset().top), scrollLeft: ($(element).offset().left)}, 1500);
 			};
-			//console.log(polyP);
-
-			$('#polyLine').attr('points',polyP);
-			//
-			$('#markerDiv').append('<div id="fMarker" style="position:absolute;left:'+(finalMarkerI-15)+'px;"></div>');
-			$('#fMarker').animate({top:(finalMarkerJ-27)},600);
-
-		}else
-		{
-			oldRoute[0].push(y2+'_'+x2);
-
-		}
-	}	
-}
-
-function change_z_index() {
-	console.log('changing z-index');
-	document.getElementById('fixed').style.zIndex = 900;
-}
-
-
-</script>
-
-
-</body>
+			
+			
+			
+			function centerItVariableWidth(target, outer){
+			  var out = $(outer);
+			  var tar = $(target);
+			  var x = out.width();
+			  var y = tar.outerWidth(true);
+			  var z = tar.index();
+			  $('#container').animate({scrollLeft: 190+(Math.max(0, (y * z) + (x - y)))}, 1500);
+			}
+			
+			function centerItVariableWidthInst(target, outer){
+			  var out = $(outer);
+			  var tar = $(target);
+			  var x = out.width();
+			  var y = tar.outerWidth(true);
+			  var z = tar.index();
+			  $('#container').animate({scrollLeft: 190+(Math.max(0, (y * z) + (x - y)))}, 0);
+			}
+			
+			
+			
+			var map = {
+						height: 100,
+						width: 100,
+						pos:mapMatriz 
+					};
+			
+			function traceRoute(tagName)
+			{
+				document.getElementById('search').value=tagName;
+				clearRoute();
+				$('#sideMenu').slideUp();
+				isDown=false;
+			
+				//Liga todos de volta
+				for (var t=1;t<countRadioLocation;t++) {
+				  //var obj = targets[key];
+				  
+				  var key2='t'+String(t);	
+				  //console.log(key2);
+			
+				  document.getElementById(key2).style.display='block';
+				}
+				
+				//var targetKey=document.querySelector('input[name="targ"]:checked').value;
+				trace(targets[tagName].j,targets[tagName].i);
+				
+				
+				
+				/* Animate */
+				
+				
+				
+				
+				
+				//scrollto(document.getElementById('userMarker'));
+				
+				centerItVariableWidth(document.getElementById('userMarker'), document.getElementById('container'));
+				
+				
+				
+				$("#mapCanvas").animate({
+			    zoom: 1.45
+				}, 1100);
+				
+				$("#polyCanvas").animate({
+			    zoom: 1.45
+				}, 1100);
+				
+				
+			}
+			
+			function clearRoute()
+			{
+				for (var b = 0; b <oldRoute[0].length; b++) {
+					$('#'+oldRoute[0][b]).html("");
+				};
+				oldRoute[0]=new Array();
+			
+			}
+			
+			function trace(targetPosX, targetPosY) {
+				x1 = targetPosX;
+				y1 = targetPosY;
+				
+				x2 = currentPosI;
+				y2 = currentPosJ;
+				
+				var polyP="";
+				//$('#polyCanvas').html('');
+				
+				$('#polyLine').attr('points','');
+				
+			
+				oldRoute[0].push(y2+'_'+x2);
+			
+				while(true)
+				{	
+					if(x2==x1 && y2==y1)
+					{
+						break;
+					}	
+						
+					direction = getDir(y2, x2, y1, x1, map, 99);
+			
+					if(direction == 'r')
+						x2++;
+					else if(direction == 'l')
+						x2--;
+					else if(direction == 'd')
+						y2++;
+					else if(direction == 'u')
+						y2--;
+					else if(direction=='dr')
+					{
+						y2++;
+						x2++;
+					}
+					else if(direction=='ur')
+					{
+						y2--;
+						x2++;
+					}
+					else if(direction=='dl')
+					{
+						y2++;
+						x2--;
+					}
+					else if(direction=='ul')
+					{
+						y2--;
+						x2--;
+					}
+						
+					if(x2==x1 && y2==y1)
+					{	
+						oldRoute[0].push(y2+'_'+x2);
+						
+						$('#markerDiv').html('');
+						for (var b = 0; b <oldRoute[0].length; b++) {
+							var IandJ = oldRoute[0][b].split('_');
+							if(b==oldRoute[0].length-1)
+							{
+								break;
+							}
+			
+							else if(b==oldRoute[0].length-2)
+							{
+								finalMarkerI=((IandJ[1]*w)+((w/2)-1));
+								finalMarkerJ=((IandJ[0]*h)+((h/5)-1));
+								//console.log("peniano "+finalMarkerI+" "+finalMarkerJ);
+							}	
+							
+							polyP += ((IandJ[1]*w)+((w/2)-1))+","+((IandJ[0]*h)+((h/5)-1))+" ";
+						};
+						//console.log(polyP);
+			
+						$('#polyLine').attr('points',polyP);
+						//
+						$('#markerDiv').append('<div id="fMarker" style="position:absolute;left:'+(finalMarkerI-15)+'px;"></div>');
+						$('#fMarker').animate({top:(finalMarkerJ-27)},600);
+			
+					}else
+					{
+						oldRoute[0].push(y2+'_'+x2);
+			
+					}
+				}	
+			}
+			
+			function change_z_index() {
+				console.log('changing z-index');
+				document.getElementById('fixed').style.zIndex = 900;
+			}
+			
+			
+		</script>
+	</body>
 </html>
