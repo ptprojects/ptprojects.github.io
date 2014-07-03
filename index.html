@@ -17,10 +17,8 @@
 	{
 		margin-right: 20px;
 		display: inline-block;
-		height: 1200px;
+		height: auto;
 		min-width: 100%;
-		background: rgb(40,52,105) url("img/header_bg3.png");
-		box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
 		font-family: 'Roboto';
 		font-weight: 100;
 		text-align: center;
@@ -35,7 +33,7 @@
 		height: 350px;
 		min-width: 400px;
 		background: #fff;
-		box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+		box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
 		font-family: 'Roboto';
 		font-weight: 100;
 		text-align: center;
@@ -50,7 +48,7 @@
 
 	body
 	{
-		
+		background: rgb(40,52,105) url("img/header_bg3.png");
 		margin: 0;
 	}
 
@@ -111,15 +109,17 @@
 	#logo_text
 	{
 		font-weight: 100;
-		border-right: solid 3px rgba(255, 255, 255, 0.2);
+		/* 
+border-right: solid 3px rgba(255, 255, 255, 0.2);
 		border-bottom: solid 3px rgba(255, 255, 255, 0.2);
 		border-left: solid 3px rgba(255, 255, 255, 0.2);
+ */
 		padding: 0px 3px 3px 3px;
 		color: rgb(255, 255, 255);
 		width: 20%;
 		margin: auto;
 		margin-top: 20px;
-		font-size: 20px;
+		font-size: 33px;
 		float: left;
 		margin-left: 20px;
 		font-family: 'Roboto';
@@ -127,13 +127,15 @@
 
 	#landing_text
 	{
-		height: 80px;
-		width: 600px;
-		margin: auto;
+		
+		
+		width:100%;
+		text-align:center;
 		margin-top: 100px;
-		margin-bottom: 70px;
+		
 		color: white;
-		font-size: 30px;
+		font-size: 40px;
+		font-weight:200;
 	}
 
 	#indoorMaps
@@ -166,10 +168,11 @@
 </head>
 <body>
 <div id="body">
-	<div id="navbar"><div id="logo_text">PtProjects</div></div>
+	<div id="navbar"><div id="logo_text"><span style="color:#1ac6ff">PT</span>Projects</div></div>
 	<div class="main_box">
 		<!-- <div id="logo"></div> -->
-		<div id="landing_text">This is the portfolio page for all the ptprojects. They were all developed during Hackathons.</div>
+		<div id="landing_text">Solutions made under 24h</div>
+		<div style="font-size:22px;font-weight:100;color:#FFF;margin-bottom: 70px;">We have 5 winning projects at hackathons in the Silicon Valley</div>
 	
 	<div id="grid">
 		<div id="acjobs" class="boxes" onclick="location.href='https://ptprojects.github.io/acjobs'">
